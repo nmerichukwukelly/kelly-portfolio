@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kelly-Chukwudi | Multipotentialite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --burnt:    #C4561A;
+      --terracotta: #D97042;
+      --orange:   #E8894A;
+      --peach:    #F2B48A;
+      --blush:    #F5C4A8;
+      --warm-pink:#E07070;
+      --cream:    #FDF4EC;
+      --deep:     #2A1506;
+      --mid:      #6B3117;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--deep);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--burnt);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--burnt);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.2s, height 0.2s;
+      opacity: 0.6;
+    }
+    body:has(a:hover) .cursor { width: 20px; height: 20px; background: var(--warm-pink); }
+    body:has(a:hover) .cursor-ring { width: 52px; height: 52px; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.4rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      mix-blend-mode: multiply;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--burnt);
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+      cursor: none;
+    }
+    .nav-links a:hover { color: var(--burnt); }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--burnt);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 6rem 4rem 5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      top: 0; right: -60px;
+      width: 120px; height: 100%;
+      background: var(--burnt);
+      clip-path: polygon(0 0, 50% 0, 100% 50%, 50% 100%, 0 100%);
+      z-index: 3;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--peach);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--peach);
+      display: block;
+      font-size: 0.65em;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+      color: var(--blush);
+      margin-top: 1.8rem;
+      line-height: 1.7;
+      max-width: 340px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex; gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .btn {
+      padding: 0.85rem 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      border: none;
+      cursor: none;
+      text-decoration: none;
+      transition: all 0.25s;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: var(--cream);
+      color: var(--burnt);
+    }
+    .btn-primary:hover { background: var(--deep); color: var(--cream); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--cream);
+      border: 1.5px solid rgba(255,255,255,0.4);
+    }
+    .btn-ghost:hover { border-color: var(--cream); }
+
+    .hero-right {
+      background: var(--cream);
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 6rem 4rem 5rem 6rem;
+      position: relative;
+    }
+
+    /* Big decorative letter */
+    .hero-letter {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: 28vw;
+      font-weight: 900;
+      color: var(--peach);
+      opacity: 0.12;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .hero-video-placeholder {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 9/11;
+      background: var(--terracotta);
+      position: relative;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 1s 1s forwards;
+    }
+    .hero-video-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(42,21,6,0.7) 0%, transparent 60%);
+    }
+
+    .video-noise {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px; height: 72px;
+      background: rgba(253,244,236,0.2);
+      border-radius: 50%;
+      border: 2px solid rgba(253,244,236,0.6);
+      display: flex; align-items: center; justify-content: center;
+      cursor: none;
+      transition: transform 0.3s, background 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .play-btn:hover { transform: translate(-50%,-50%) scale(1.1); background: rgba(253,244,236,0.3); }
+    .play-btn svg { fill: white; margin-left: 4px; }
+
+    .video-label {
+      position: relative; z-index: 2;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--cream);
+      line-height: 1.4;
+    }
+    .video-sublabel {
+      position: relative; z-index: 2;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--peach);
+      margin-top: 0.5rem;
+    }
+
+    /* ═══ MARQUEE ═══ */
+    .marquee-strip {
+      background: var(--deep);
+      padding: 1rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--peach);
+      padding: 0 2.5rem;
+    }
+    .marquee-dot {
+      color: var(--burnt);
+      font-style: normal;
+    }
+
+    /* ═══ INTRO SECTION ═══ */
+    .intro {
+      padding: 8rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+    }
+    .intro::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--peach), transparent);
+    }
+
+    .intro-left {
+      position: relative;
+    }
+    .intro-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 9rem;
+      font-weight: 900;
+      color: var(--peach);
+      opacity: 0.2;
+      line-height: 1;
+      position: absolute;
+      top: -3rem; left: -1.5rem;
+      user-select: none;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--burnt);
+      font-weight: 500;
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 32px; height: 1.5px;
+      background: var(--burnt);
+    }
+
+    .intro-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--deep);
+    }
+    .intro-headline em {
+      font-style: italic;
+      color: var(--burnt);
+    }
+
+    .intro-text {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--mid);
+      max-width: 560px;
+    }
+    .intro-text p + p { margin-top: 1.2rem; }
+
+    /* ═══ VERSIONS SECTION ═══ */
+    .versions {
+      padding: 6rem 0 8rem;
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+    .versions::before {
+      content: 'KELLY';
+      position: absolute;
+      font-family: 'Syne', sans-serif;
+      font-size: 30vw;
+      font-weight: 800;
+      color: rgba(255,255,255,0.02);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .versions-header {
+      padding: 0 6rem;
+      margin-bottom: 5rem;
+    }
+    .versions-header .section-label { color: var(--peach); }
+    .versions-header .section-label::before { background: var(--peach); }
+    .versions-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+    .versions-title em {
+      font-style: italic;
+      color: var(--peach);
+    }
+
+    .versions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .version-card {
+      position: relative;
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      cursor: none;
+      transition: background 0.4s;
+      overflow: hidden;
+    }
+    .version-card:last-child { border-right: none; }
+    .version-card:hover { background: rgba(255,255,255,0.04); }
+    .version-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 3px;
+      transition: width 0.5s ease;
+    }
+    .version-card:nth-child(1)::after { background: var(--terracotta); }
+    .version-card:nth-child(2)::after { background: var(--orange); }
+    .version-card:nth-child(3)::after { background: var(--warm-pink); }
+    .version-card:nth-child(4)::after { background: var(--peach); }
+    .version-card:hover::after { width: 100%; }
+
+    .version-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      opacity: 0.1;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .version-emoji {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .version-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cream);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+    .version-desc {
+      font-size: 0.88rem;
+      color: rgba(253,244,236,0.6);
+      line-height: 1.75;
+    }
+
+    .version-tag {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+    }
+    .version-card:nth-child(1) .version-tag { background: rgba(196,86,26,0.2); color: var(--terracotta); }
+    .version-card:nth-child(2) .version-tag { background: rgba(232,137,74,0.2); color: var(--orange); }
+    .version-card:nth-child(3) .version-tag { background: rgba(224,112,112,0.2); color: var(--warm-pink); }
+    .version-card:nth-child(4) .version-tag { background: rgba(242,180,138,0.2); color: var(--peach); }
+
+    /* ═══ HIRE ME ═══ */
+    .hire {
+      padding: 8rem 6rem;
+      position: relative;
+    }
+    .hire-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      align-items: end;
+    }
+    .hire-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .hire-title em { font-style: italic; color: var(--burnt); }
+    .hire-subtitle {
+      font-size: 1rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .hire-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5px;
+      background: var(--peach);
+    }
+
+    .hire-card {
+      background: var(--cream);
+      padding: 2.5rem 1.8rem;
+      position: relative;
+      cursor: none;
+      transition: background 0.3s, transform 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      overflow: hidden;
+    }
+    .hire-card:hover {
+      background: var(--burnt);
+      transform: translateY(-6px);
+      z-index: 2;
+    }
+    .hire-card:hover .hire-card-num,
+    .hire-card:hover .hire-card-title,
+    .hire-card:hover .hire-card-desc { color: var(--cream); }
+    .hire-card:hover .hire-card-num { opacity: 0.3; }
+    .hire-card:hover .hire-card-arrow { color: var(--cream); transform: translate(4px, -4px); }
+
+    .hire-card-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--peach);
+      opacity: 0.6;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      display: block;
+      transition: color 0.3s, opacity 0.3s;
+    }
+    .hire-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .hire-card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--deep);
+      margin-bottom: 0.75rem;
+      transition: color 0.3s;
+    }
+    .hire-card-desc {
+      font-size: 0.82rem;
+      color: var(--mid);
+      line-height: 1.65;
+      transition: color 0.3s;
+    }
+    .hire-card-arrow {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: var(--terracotta);
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    /* ═══ QUOTE STRIP ═══ */
+    .quote-strip {
+      background: var(--terracotta);
+      padding: 5rem 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-strip::before {
+      content: '❝';
+      position: absolute;
+      font-size: 20rem;
+      color: rgba(0,0,0,0.06);
+      top: -5rem; left: 2rem;
+      font-family: Georgia, serif;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-style: italic;
+      color: var(--cream);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.5;
+      position: relative;
+    }
+    .quote-attr {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(253,244,236,0.6);
+    }
+
+    /* ═══ CONNECT ═══ */
+    .connect {
+      padding: 8rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .connect-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .connect-title em { font-style: italic; color: var(--burnt); }
+    .connect-desc {
+      font-size: 1rem;
+      color: var(--mid);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+    .connect-links {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .connect-link {
+      display: flex; align-items: center; gap: 1rem;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 500;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--blush);
+      cursor: none;
+      transition: color 0.2s, padding-left 0.2s;
+    }
+    .connect-link:hover { color: var(--burnt); padding-left: 0.5rem; }
+    .connect-link span { font-size: 1.2rem; }
+
+    .connect-right {
+      background: var(--burnt);
+      padding: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .connect-right::before {
+      content: '';
+      position: absolute;
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      top: -80px; right: -80px;
+    }
+    .connect-right::after {
+      content: '';
+      position: absolute;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      bottom: -60px; left: 2rem;
+    }
+    .connect-form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--cream);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .form-group { margin-bottom: 1.25rem; position: relative; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(253,244,236,0.1);
+      border: 1px solid rgba(253,244,236,0.2);
+      padding: 1rem 1.2rem;
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.2s, background 0.2s;
+      cursor: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(253,244,236,0.4); }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--peach);
+      background: rgba(253,244,236,0.15);
+    }
+    .form-group textarea { height: 120px; resize: none; }
+    .btn-form {
+      background: var(--cream);
+      color: var(--burnt);
+      padding: 1rem 2.5rem;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: none;
+      transition: all 0.25s;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+    .btn-form:hover { background: var(--deep); color: var(--cream); }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background: var(--deep);
+      padding: 3rem 6rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--peach);
+      text-transform: uppercase;
+    }
+    .footer-tagline {
+      font-size: 0.78rem;
+      color: rgba(253,244,236,0.3);
+      letter-spacing: 0.08em;
+    }
+    .footer-love {
+      font-size: 0.78rem;
+      color: rgba(253,244,236,0.3);
+    }
+    .footer-love span { color: var(--warm-pink); }
+
+    /* ═══ ANIMATIONS ═══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-left::after { display: none; }
+      .hero-right { min-height: 60vh; }
+      .versions-grid { grid-template-columns: 1fr 1fr; }
+      .hire-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+      .intro, .connect { grid-template-columns: 1fr; gap: 3rem; }
+      .hire-header { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero-left, .intro, .hire, .quote-strip, .connect, footer {
+        padding-left: 1.5rem; padding-right: 1.5rem;
+      }
+      .versions-header { padding: 0 1.5rem; }
+      .versions-grid { grid-template-columns: 1fr; }
+      .hire-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-logo">Kelly-Chukwudi</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#versions">The Versions</a></li>
+      <li><a href="#hire">Hire Me</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Welcome to my side of the internet</p>
+      <h1 class="hero-name">
+        Kelly-Chukwudi
+        <em>Nmerichukwu Oluwatoni</em>
+      </h1>
+      <p class="hero-tagline">
+        Multipotentialite. Speaker. Builder. Academic. Corporate babe. Resting and rising — all at once.
+      </p>
+      <div class="hero-cta">
+        <a href="#versions" class="btn btn-primary">Meet the Versions</a>
+        <a href="#hire" class="btn btn-ghost">Work with Me</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-letter">K</div>
+      <div class="hero-video-placeholder">
+        <div class="video-noise"></div>
+        <div class="play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <p class="video-label">Hi guys, drumrolls… Welcome to my crib. Get comfortable.</p>
+        <p class="video-sublabel">↑ Replace with your intro video</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span class="marquee-item">Public Speaker <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Event Manager <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Project Manager <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Construction Manager <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Operations Lead <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Business Analyst <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Academic <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Multipotentialite <span class="marquee-dot">✦</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">Public Speaker <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Event Manager <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Project Manager <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Construction Manager <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Operations Lead <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Business Analyst <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Academic <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Multipotentialite <span class="marquee-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro" id="about">
+    <div class="intro-left">
+      <div class="intro-number reveal">01</div>
+      <div class="section-label reveal">The Story</div>
+      <h2 class="intro-headline reveal">
+        On a typical day,<br/>
+        you could meet<br/>
+        <em>4 versions of me.</em>
+      </h2>
+    </div>
+    <div class="intro-right">
+      <div class="intro-text reveal">
+        <p>I'm Kelly-Chukwudi — but you probably came here because you already know that. You're here because you want to <em>understand</em> me, or because you want to <em>hire</em> me. Either way, I'm genuinely glad you showed up.</p>
+        <p>I'm a multipotentialite — which means my curiosity doesn't sit still and neither does my career. I live at the intersection of knowledge, people, systems, and structure. I'm studying Construction Management at OAU while working in operations, speaking at events, and quietly planning a PhD. For the plot, obviously.</p>
+        <p>I work from my heart. Whatever I find to do, I do it with all of me. And I've learned that certain seasons of life are for being and not doing — my self-worth is not attached to doing. That took a couple of years to learn, but I'm here now.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERSIONS -->
+  <section class="versions" id="versions">
+    <div class="versions-header">
+      <div class="section-label reveal">The Four Versions</div>
+      <h2 class="versions-title reveal">Which part of me<br/>do you <em>need?</em></h2>
+    </div>
+
+    <div class="versions-grid">
+      <div class="version-card reveal">
+        <div class="version-num">01</div>
+        <span class="version-emoji">🎤</span>
+        <h3 class="version-title">The Yapper</h3>
+        <p class="version-desc">People swear I'm extroverted (I wish). The public speaker, debater, great conversationalist. The part of me that believes great conversations can change the world. Catch me at conferences, webinars — and sometimes planning the concert itself.</p>
+        <span class="version-tag">Social butterfly</span>
+      </div>
+
+      <div class="version-card reveal">
+        <div class="version-num">02</div>
+        <span class="version-emoji">📚</span>
+        <h3 class="version-title">The Academic Weapon</h3>
+        <p class="version-desc">Born from academic validation, evolved into something concrete. Reads research papers as a hobby. Challenges thought processes that lack logic. I'm the type to get a PhD for the plot. I think I'll be Prof one day.</p>
+        <span class="version-tag">Knowledge lover</span>
+      </div>
+
+      <div class="version-card reveal">
+        <div class="version-num">03</div>
+        <span class="version-emoji">💼</span>
+        <h3 class="version-title">The Corporate Babe</h3>
+        <p class="version-desc">Born in 2021. Started in event management, moved to project management, now operations with a sprinkle of business analysis. Good corporate outfits, silhouette heels, speaking gibberish all day — low-key enjoying every bit of it.</p>
+        <span class="version-tag">Gets things done</span>
+      </div>
+
+      <div class="version-card reveal">
+        <div class="version-num">04</div>
+        <span class="version-emoji">🌙</span>
+        <h3 class="version-title">The I Just Wan Dey</h3>
+        <p class="version-desc">If you catch me on a day like this, I'm chilled. Intentionally non-confrontational. Just sitting by my thoughts. I'm recharging. This part exists and I'm comfortable in it. Certain seasons of life are for being and not doing.</p>
+        <span class="version-tag">Resting & rising</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIRE ME -->
+  <section class="hire" id="hire">
+    <div class="hire-header">
+      <div>
+        <div class="section-label reveal">Work With Me</div>
+        <h2 class="hire-title reveal">Which part of me<br/>do you want to <em>hire?</em></h2>
+      </div>
+      <p class="hire-subtitle reveal">Each version of me comes with a portfolio. Pick the hat that fits your project and let's build something worth talking about.</p>
+    </div>
+
+    <div class="hire-grid">
+      <a href="#" class="hire-card reveal">
+        <span class="hire-card-num">01</span>
+        <span class="hire-icon">🎙️</span>
+        <h3 class="hire-card-title">Event Host</h3>
+        <p class="hire-card-desc">MC, panel moderator, conference host, webinar facilitator. I hold a room and I hold it well.</p>
+        <span class="hire-card-arrow">↗</span>
+      </a>
+
+      <a href="#" class="hire-card reveal">
+        <span class="hire-card-num">02</span>
+        <span class="hire-icon">📋</span>
+        <h3 class="hire-card-title">Project Manager</h3>
+        <p class="hire-card-desc">From scope to delivery. I love making visions come to life and seeing impact happen in real time.</p>
+        <span class="hire-card-arrow">↗</span>
+      </a>
+
+      <a href="#" class="hire-card reveal">
+        <span class="hire-card-num">03</span>
+        <span class="hire-icon">🏅</span>
+        <h3 class="hire-card-title">Consultant</h3>
+        <p class="hire-card-desc">CAPM certified. Strategic thinking, process improvement, and business analysis that actually moves things.</p>
+        <span class="hire-card-arrow">↗</span>
+      </a>
+
+      <a href="#" class="hire-card reveal">
+        <span class="hire-card-num">04</span>
+        <span class="hire-icon">🏗️</span>
+        <h3 class="hire-card-title">Construction Management</h3>
+        <p class="hire-card-desc">Building at OAU, interned in construction, written industry articles. Hire me where the real structures are built.</p>
+        <span class="hire-card-arrow">↗</span>
+      </a>
+
+      <a href="#" class="hire-card reveal">
+        <span class="hire-card-num">05</span>
+        <span class="hire-icon">⚙️</span>
+        <h3 class="hire-card-title">Woman in Operations</h3>
+        <p class="hire-card-desc">Systems, people, processes. I see the gaps, I build the bridges, and I love every bit of the chaos in between.</p>
+        <span class="hire-card-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- QUOTE STRIP -->
+  <div class="quote-strip">
+    <p class="quote-text reveal">"I work from my heart. Whatever I find to do, I do it with all of me."</p>
+    <p class="quote-attr reveal">— Kelly-Chukwudi</p>
+  </div>
+
+  <!-- CONNECT -->
+  <section class="connect" id="connect">
+    <div class="connect-left reveal">
+      <div class="section-label">Let's Talk</div>
+      <h2 class="connect-title">Let's make<br/><em>something.</em></h2>
+      <p class="connect-desc">Whether you want to hire one version of me, all four, or you just want to have a great conversation — my inbox is open and I genuinely love meeting people.</p>
+      <div class="connect-links">
+        <a href="mailto:hello@kelly.com" class="connect-link"><span>✉️</span> hello@kelly.com</a>
+        <a href="#" class="connect-link"><span>💼</span> LinkedIn</a>
+        <a href="#" class="connect-link"><span>🐦</span> Twitter / X</a>
+        <a href="#" class="connect-link"><span>📸</span> Instagram</a>
+      </div>
+    </div>
+    <div class="connect-right reveal">
+      <h3 class="connect-form-title">Say hello.</h3>
+      <div class="form-group">
+        <input type="text" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Your email" />
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Which version of Kelly are you here for?" />
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Tell me what you have in mind…"></textarea>
+      </div>
+      <button class="btn-form">Send It ✦</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Kelly-Chukwudi ✦</div>
+    <div class="footer-tagline">Multipotentialite · OAU · Nigeria</div>
+    <div class="footer-love">Made with <span>♥</span> and a lot of ambition</div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
